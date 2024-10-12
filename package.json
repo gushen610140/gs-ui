@@ -1,0 +1,18 @@
+{
+  "name": "gs-ui-monorepo",
+  "version": "1.0.0",
+  "description": "Glass Art",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "pnpm --filter @gs-ui/playground dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^3.5.10",
+    "@gs-ui/components": "workspace:*",
+    "gs-ui": "workspace:*",
+    "@gs-ui/utils": "workspace:*"
+  }
+}
