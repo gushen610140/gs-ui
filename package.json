@@ -4,7 +4,8 @@
   "description": "Glass Art",
   "main": "index.ts",
   "scripts": {
-    "dev": "pnpm --filter @gs-ui/playground dev"
+    "dev": "pnpm --filter @gs-ui/playground dev",
+    "tree": "treer -e tree.md -i \"/node_modules|.git|.idea/\""
   },
   "keywords": [],
   "author": "",
