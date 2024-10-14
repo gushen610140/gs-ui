@@ -5,15 +5,24 @@
   "main": "index.ts",
   "scripts": {
     "dev": "pnpm --filter @gs-ui/playground dev",
-    "tree": "treer -e tree.md -i \"/node_modules|.git|.idea/\""
+    "tree": "treer -e tree.md -i \"/node_modules|.git|.idea/\"",
+    "test": "pnpm --filter @gs-ui/components test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^3.5.10",
     "@gs-ui/components": "workspace:*",
+    "@gs-ui/utils": "workspace:*",
+    "@vue/test-utils": "^2.4.6",
     "gs-ui": "workspace:*",
-    "@gs-ui/utils": "workspace:*"
+    "vitest": "^2.1.2",
+    "vue": "^3.5.10"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^4.0.1",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.3"
   }
 }
