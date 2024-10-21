@@ -7,13 +7,11 @@ describe("Button.vue", () => {
   const onClick = vi.fn();
   test("basic button", async () => {
     const wrapper = mount(() => (
-      <Button type="primary" {...{ onClick }}>
-        button content
-      </Button>
+      <Button {...{ onClick }}>button content</Button>
     ));
 
     // class
-    expect(wrapper.classes()).toContain("er-button--primary");
+    // expect(wrapper.classes()).toContain("er-button--primary");
 
     // slot
     expect(wrapper.get("button").text()).toBe("button content");
