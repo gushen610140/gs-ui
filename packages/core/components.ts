@@ -1,5 +1,5 @@
 import {GsButton} from "@gs-ui/components";
-import {Plugin} from "vue"
+import type {Plugin} from "vue";
 
 export default [
     GsButton

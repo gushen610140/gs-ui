@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { defineOptions } from "vue";
-import { ButtonProps } from "./type";
+import type { ButtonProps } from "./type";
 
 defineOptions({
   name: "GsButton",
@@ -12,5 +11,5 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 </script>
 
 <template>
-  <component :is="tag"> </component>
+  <button>123</button>
 </template>

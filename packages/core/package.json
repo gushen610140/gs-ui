@@ -17,8 +17,5 @@
   "devDependencies": {
   },
   "dependencies": {
-  },
-  "peerDependencies": {
-    "vue": "^3.4.27"
   }
 }
