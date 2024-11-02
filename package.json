@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "pnpm --filter @gs-ui/play dev",
     "docs:dev": "pnpm --filter @gs-ui/docs dev",
-    "docs:build": "pnpm --filter @gs-ui/docs dev",
+    "docs:build": "pnpm --filter @gs-ui/docs build",
     "tree": "treer -e tree.md -i \"/node_modules|.git|.idea/\"",
     "test": "pnpm --filter @gs-ui/components test"
   },
