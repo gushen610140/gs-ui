@@ -1,5 +1,5 @@
 {
-  "name": "gs-ui-monorepo",
+  "name": "@gs-ui/workspace",
   "version": "1.0.0",
   "description": "Glass Art",
   "main": "index.ts",
@@ -14,15 +14,30 @@
   "dependencies": {
     "@gs-ui/components": "workspace:*",
     "@gs-ui/utils": "workspace:*",
-    "@vue/test-utils": "^2.4.6",
+    "@gs-ui/docs": "workspace:*",
+    "@gs-ui/hooks": "workspace:*",
+    "@gs-ui/play": "workspace:*",
+    "@gs-ui/theme": "workspace:*",
     "gs-ui": "workspace:*",
-    "vitest": "^2.1.2",
-    "vue": "^3.5.10"
+    "lodash-es": "^4.17.21",
+    "vue": "^3.5.12"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.8.6",
+    "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
+    "@vue/tsconfig": "^0.5.1",
     "jsdom": "^25.0.1",
-    "prettier": "^3.3.3"
+    "postcss-color-mix": "^1.1.0",
+    "postcss-each": "^1.1.0",
+    "postcss-each-variables": "^0.3.0",
+    "postcss-for": "^2.1.1",
+    "postcss-nested": "^7.0.2",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.2.11",
+    "vitest": "^2.1.4",
+    "vue-tsc": "^2.1.10"
   }
 }

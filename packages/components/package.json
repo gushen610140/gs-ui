@@ -1,14 +1,21 @@
 {
   "name": "@gs-ui/components",
   "version": "1.0.0",
-  "private":true,
+  "private": true,
   "main": "index.ts",
   "scripts": {
     "test": "vitest"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.4",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "async-validator": "^4.2.5"
+  }
 }
