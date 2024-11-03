@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import type { ButtonProps } from "./type";
+import { type ButtonProps } from "./types.ts";
+import {ref} from "vue";
 
 defineOptions({
   name: "GsButton",
@@ -7,9 +8,37 @@ defineOptions({
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   tag: "button",
+  nativeType: "button",
+  useThrottle: true,
+  throttleDuration: 500,
 });
+
+const _ref = ref<HTMLButtonElement>();
+const slots = defineSlots();
+
 </script>
 
 <template>
-  <button>123</button>
+  <component
+    :is="tag"
+    ref="_ref"
+    class="gs-button"
+    :class="{
+      [`gs-button--${type}`]: type,
+      [`gs-button--${size}`]: size,
+      'is-plain': plain,
+      'is-round': round,
+      'is-circle': circle,
+      'is-disabled': disabled,
+      'is-loading': loading,
+    }"
+    :disabled="disabled || loading ? true : void 0"
+    :type="tag === 'button' ? nativeType : void 0"
+  >
+    <slot></slot>
+  </component>
 </template>
+
+<style scoped>
+@import "./style.css";
+</style>

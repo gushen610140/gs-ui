@@ -1,0 +1,199 @@
+.gs-button-group {
+    --gs-button-group-border-color: var(--gs-border-color-lighter);
+}
+.gs-button {
+    --gs-button-font-weight: var(--gs-font-weight-primary);
+    --gs-button-border-color: var(--gs-border-color);
+    --gs-button-bg-color: var(--gs-fill-color-blank);
+    --gs-button-text-color: var(--gs-text-color-regular);
+    --gs-button-disabled-text-color: var(--gs-disabled-text-color);
+    --gs-button-disabled-bg-color: var(--gs-fill-color-blank);
+    --gs-button-disabled-bordgs-color: var(--gs-border-color-light);
+    --gs-button-hover-text-color: var(--gs-color-primary);
+    --gs-button-hover-bg-color: var(--gs-color-primary);
+    --gs-button-hover-bordgs-color: var(--gs-color-primary);
+    --gs-button-active-text-color: var(--gs-button-hover-text-color);
+    --gs-button-active-bordgs-color: var(--gs-color-primary);
+    --gs-button-active-bg-color: var(--gs-button-hover-bg-color);
+    --gs-button-outline-color: var(--gs-color-primary);
+    --gs-button-active-color: var(--gs-text-color-primary);
+}
+
+.gs-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    height: 32px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: var(--gs-button-text-color);
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.1s;
+    font-weight: var(--gs-button-font-weight);
+    user-select: none;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    background-color: var(--gs-button-bg-color);
+    border: var(--gs-border);
+    border-color: var(--gs-button-bordgs-color);
+    padding: 8px 15px;
+    font-size: var(--gs-font-size-base);
+    border-radius: var(--gs-border-radius-base);
+    & + & {
+        margin-left: 12px;
+    }
+    &:hover,
+    &:focus {
+        color: var(--gs-button-hovgs-text-color);
+        border-color: var(--gs-button-hover-bordgs-color);
+        background-color: var(--gs-button-hover-bg-color);
+        outline: none;
+    }
+    &:active {
+        color: var(--gs-button-active-text-color);
+        bordgs-color: var(--gs-button-active-bordgs-color);
+        background-color: var(--gs-button-active-bg-color);
+        outline: none;
+    }
+    /*plain*/
+    &.is-plain {
+        --gs-button-hovgs-text-color: var(--gs-color-primary);
+        --gs-button-hovgs-bg-color: var(--gs-fill-color-blank);
+        --gs-button-hovgs-bordgs-color: var(--gs-color-primary);
+    }
+    /*round*/
+    &.is-round {
+        bordgs-radius: var(--gs-bordgs-radius-round);
+    }
+    /*circle*/
+    &.is-circle {
+        bordgs-radius: 50%;
+        padding: 8px;
+    }
+    /*disabled*/
+    &.is-loading,
+    &.is-disabled,
+    &.is-disabled:hovgs,
+    &.is-disabled:focus,
+    &[disabled],
+    &[disabled]:hovgs,
+    &[disabled]:focus {
+        color: var(--gs-button-disabled-text-color);
+        cursor: not-allowed;
+        background-image: none;
+        background-color: var(--gs-button-disabled-bg-color);
+        bordgs-color: var(--gs-button-disabled-bordgs-color);
+    }
+    [class*='gs-icon'] {
+        width: 1em;
+        height: 1em;
+    }
+}
+@each $val in primary, success, warning, info, danggs {
+    .gs-button--$(val) {
+    --gs-button-text-color: var(--gs-color-white);
+    --gs-button-bg-color: var(--gs-color-$(val));
+    --gs-button-bordgs-color: var(--gs-color-$(val));
+    --gs-button-outline-color: var(--gs-color-$(val)-light-5);
+    --gs-button-active-color: var(--gs-color-$(val)-dark-2);
+    --gs-button-hovgs-text-color: var(--gs-color-white);
+    --gs-button-hovgs-bg-color: var(--gs-color-$(val)-light-3);
+    --gs-button-hovgs-bordgs-color: var(--gs-color-$(val)-light-3);
+    --gs-button-active-bg-color: var(--gs-color-$(val)-dark-2);
+    --gs-button-active-bordgs-color: var(--gs-color-$(val)-dark-2);
+    --gs-button-disabled-text-color: var(--gs-color-white);
+    --gs-button-disabled-bg-color: var(--gs-color-$(val)-light-5);
+    --gs-button-disabled-bordgs-color: var(--gs-color-$(val)-light-5);
+}
+    .gs-button--$(val).is-plain {
+    --gs-button-text-color: var(--gs-color-$(val));
+    --gs-button-bg-color: var(--gs-color-$(val)-light-9);
+    --gs-button-bordgs-color: var(--gs-color-$(val)-light-5);
+    --gs-button-hovgs-text-color: var(--gs-color-white);
+    --gs-button-hovgs-bg-color: var(--gs-color-$(val));
+    --gs-button-hovgs-bordgs-color: var(--gs-color-$(val));
+    --gs-button-active-text-color: var(--gs-color-white);
+
+    --gs-button-disabled-text-color: var(--gs-color-$(val)-light-5);
+    --gs-button-disabled-bg-color: var(--gs-color-$(val)-light-9);
+    --gs-button-disabled-bordgs-color: var(--gs-color-$(val)-light-8);
+}
+}
+.gs-button--large {
+    --gs-button-size: 40px;
+    height: var(--gs-button-size);
+    padding: 12px 19px;
+    font-size: var(--gs-font-size-base);
+    bordgs-radius: var(--gs-bordgs-radius-base);
+    /*circle*/
+    &.is-circle {
+        bordgs-radius: 50%;
+        padding: 12px;
+    }
+}
+.gs-button--small {
+    --gs-button-size: 24px;
+    height: var(--gs-button-size);
+    padding: 5px 11px;
+    font-size: 12px;
+    bordgs-radius: calc(var(--gs-bordgs-radius-base) - 1px);
+    /*circle*/
+    &.is-circle {
+        bordgs-radius: 50%;
+        padding: 5px;
+    }
+    [class*='gs-icon'] {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.gs-button-group {
+    display: inline-block;
+    vgstical-align: middle;
+
+    &::aftgs {
+        clear: both;
+    }
+    & > :deep(.gs-button){
+        float: left;
+        position: relative;
+        margin-left: 0;
+        &:first-child{
+            bordgs-top-right-radius: 0;
+            bordgs-bottom-right-radius: 0;
+            bordgs-right-color: var(--gs-button-group-bordgs-color);
+        }
+        &:last-child{
+            bordgs-top-left-radius: 0;
+            bordgs-bottom-left-radius: 0;
+            bordgs-left-color: var(--gs-button-group-bordgs-color);
+        }
+        &:not(:first-child):not(:last-child) {
+            bordgs-radius: 0;
+
+            bordgs-left-color: var(--gs-button-group-bordgs-color);
+            bordgs-right-color: var(--gs-button-group-bordgs-color);
+        }
+        &:not(:last-child) {
+            margin-right: -1px;
+        }
+        &:first-child:last-child {
+            bordgs-top-right-radius: var(--gs-bordgs-radius-base);
+            bordgs-bottom-right-radius: var(--gs-bordgs-radius-base);
+            bordgs-top-left-radius: var(--gs-bordgs-radius-base);
+            bordgs-bottom-left-radius: var(--gs-bordgs-radius-base);
+
+            &.is-round {
+                bordgs-radius: var(--gs-bordgs-radius-round);
+            }
+
+            &.is-circle {
+                bordgs-radius: 50%;
+            }
+        }
+    }
+}

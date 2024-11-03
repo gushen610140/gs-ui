@@ -1,173 +1,199 @@
-import { markRaw, nextTick, ref } from "vue";
+import { describe, test, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
-import { describe, expect, it, test } from "vitest";
-import Button from "./Button.vue";
+import type { ButtonType, ButtonSize } from "./types";
 
-const AXIOM = "Rem is the best girl";
+import Icon from "../Icon/Icon.vue";
+import Button from "./Button.vue";
+import ButtonGroup from "./ButtonGroup.vue";
 
 describe("Button.vue", () => {
-  it("create", () => {
-    const wrapper = mount(() => <Button type="primary" />);
-
-    expect(wrapper.classes()).toContain("el-button--primary");
-  });
-
-  it("icon", () => {
-    const wrapper = mount(() => <Button icon={markRaw(Search)} />);
-
-    expect(wrapper.findComponent(Search).exists()).toBeTruthy();
-  });
-
-  it("nativeType", () => {
-    const wrapper = mount(() => <Button nativeType="submit" />);
-
-    expect(wrapper.attributes("type")).toBe("submit");
-  });
-
-  it("loading", () => {
-    const wrapper = mount(() => <Button loading />);
-
-    expect(wrapper.classes()).toContain("is-loading");
-    expect(wrapper.findComponent(Loading).exists()).toBeTruthy();
-  });
-
-  it("size", () => {
-    const wrapper = mount(() => <Button size="large" />);
-
-    expect(wrapper.classes()).toContain("el-button--large");
-  });
-
-  it("plain", () => {
-    const wrapper = mount(() => <Button plain />);
-
-    expect(wrapper.classes()).toContain("is-plain");
-  });
-
-  it("round", () => {
-    const wrapper = mount(() => <Button round />);
-    expect(wrapper.classes()).toContain("is-round");
-  });
-
-  it("circle", () => {
-    const wrapper = mount(() => <Button circle />);
-
-    expect(wrapper.classes()).toContain("is-circle");
-  });
-
-  it("text", async () => {
-    const bg = ref(false);
-
-    const wrapper = mount(() => <Button text bg={bg.value} />);
-
-    expect(wrapper.classes()).toContain("is-text");
-
-    bg.value = true;
-
-    await nextTick();
-
-    expect(wrapper.classes()).toContain("is-has-bg");
-  });
-
-  it("link", async () => {
-    const wrapper = mount(() => <Button link />);
-
-    expect(wrapper.classes()).toContain("is-link");
-  });
-
-  test("render text", () => {
+  const onClick = vi.fn();
+  test("basic button", async () => {
     const wrapper = mount(() => (
-      <Button
-        v-slots={{
-          default: () => AXIOM,
-        }}
-      />
-    ));
-
-    expect(wrapper.text()).toEqual(AXIOM);
-  });
-
-  test("handle click", async () => {
-    const wrapper = mount(() => (
-      <Button
-        v-slots={{
-          default: () => AXIOM,
-        }}
-      />
-    ));
-
-    await wrapper.trigger("click");
-    expect(wrapper.emitted()).toBeDefined();
-  });
-
-  test("handle click inside", async () => {
-    const wrapper = mount(() => (
-      <Button
-        v-slots={{
-          default: () => <span class="inner-slot"></span>,
-        }}
-      />
-    ));
-
-    wrapper.find(".inner-slot").trigger("click");
-    expect(wrapper.emitted()).toBeDefined();
-  });
-
-  test("loading implies disabled", async () => {
-    const wrapper = mount(() => (
-      <Button
-        v-slots={{
-          default: () => AXIOM,
-        }}
-        loading
-      />
-    ));
-
-    await wrapper.trigger("click");
-    expect(wrapper.emitted("click")).toBeUndefined();
-  });
-
-  it("disabled", async () => {
-    const wrapper = mount(() => <Button disabled />);
-
-    expect(wrapper.classes()).toContain("is-disabled");
-    await wrapper.trigger("click");
-    expect(wrapper.emitted("click")).toBeUndefined();
-  });
-
-  it("loading icon", () => {
-    const wrapper = mount(() => (
-      <Button loadingIcon={markRaw(Search)} loading />
-    ));
-
-    expect(wrapper.findComponent(Search).exists()).toBeTruthy();
-  });
-
-  it("loading slot", () => {
-    const wrapper = mount({
-      setup: () => () => (
-        <Button
-          v-slots={{ loading: () => <span class="custom-loading">111</span> }}
-          loading={true}
-        >
-          Loading
-        </Button>
-      ),
-    });
-
-    expect(wrapper.find(".custom-loading").exists()).toBeTruthy();
-  });
-
-  it("tag", () => {
-    const link = "https://github.com/element-plus/element-plus";
-    const wrapper = mount(() => (
-      // @ts-ignore
-      <Button tag="a" href={link}>
-        {AXIOM}
+      <Button type="primary" {...{ onClick }}>
+        button content
       </Button>
     ));
 
-    expect(wrapper.text()).toEqual(AXIOM);
-    expect(wrapper.element.nodeName).toBe("A");
-    expect(wrapper.attributes("href")).toBe(link);
+    // class
+    expect(wrapper.classes()).toContain("gs-button--primary");
+
+    // slot
+    expect(wrapper.get("button").text()).toBe("button content");
+
+    // events
+    await wrapper.get("button").trigger("click");
+    expect(onClick).toHaveBeenCalledOnce();
   });
+
+  test("disabled button", async () => {
+    const wrapper = mount(() => (
+      <Button disabled {...{ onClick }}>
+        disabled button
+      </Button>
+    ));
+
+    // class
+    expect(wrapper.classes()).toContain("is-disabled");
+
+    // attrs
+    expect(wrapper.attributes("disabled")).toBeDefined();
+    expect(wrapper.find("button").element.disabled).toBeTruthy();
+
+    // events
+    await wrapper.get("button").trigger("click");
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(wrapper.emitted("click")).toBeUndefined();
+  });
+
+  test("loading button", () => {
+    const wrapper = mount(Button, {
+      props: {
+        loading: true,
+      },
+      slots: {
+        default: "loading button",
+      },
+      global: {
+        stubs: ["ErIcon"],
+      },
+    });
+
+    // class
+    expect(wrapper.classes()).toContain("is-loading");
+
+    // attrs
+    expect(wrapper.attributes("disabled")).toBeDefined();
+    expect(wrapper.find("button").element.disabled).toBeTruthy();
+
+    // events
+    wrapper.get("button").trigger("click");
+    expect(wrapper.emitted()).not.toHaveProperty("click");
+
+    // icon
+    // const iconElement = wrapper.findComponent(Icon);
+    // expect(iconElement.exists()).toBeTruthy();
+    // expect(iconElement.attributes("icon")).toBe("spinner");
+  });
+
+  // test("icon button", () => {
+  //   const wrapper = mount(Button, {
+  //     props: {
+  //       icon: "arrow-up",
+  //     },
+  //     slots: {
+  //       default: "icon button",
+  //     },
+  //     global: {
+  //       stubs: ["ErIcon"],
+  //     },
+  //   });
+  //
+  //   const iconElement = wrapper.findComponent(Icon);
+  //   expect(iconElement.exists()).toBeTruthy();
+  //   expect(iconElement.attributes("icon")).toBe("arrow-up");
+  // });
+
+  // Props: type
+  it("should has the correct type class when type prop is set", () => {
+    const types = ["primary", "success", "warning", "danger", "info"];
+    types.forEach((type) => {
+      const wrapper = mount(Button, {
+        props: { type: type as ButtonType },
+      });
+      expect(wrapper.classes()).toContain(`gs-button--${type}`);
+    });
+  });
+
+  // Props: size
+  it("should has the correct size class when size prop is set", () => {
+    const sizes = ["large", "default", "small"];
+    sizes.forEach((size) => {
+      const wrapper = mount(Button, {
+        props: { size: size as ButtonSize },
+      });
+      expect(wrapper.classes()).toContain(`gs-button--${size}`);
+    });
+  });
+
+  // Props: plain, round, circle
+  it.each([
+    ["plain", "is-plain"],
+    ["round", "is-round"],
+    ["circle", "is-circle"],
+    ["disabled", "is-disabled"],
+    ["loading", "is-loading"],
+  ])(
+    "should has the correct class when prop %s is set to true",
+    (prop, className) => {
+      const wrapper = mount(Button, {
+        props: { [prop]: true },
+        global: {
+          stubs: ["ErIcon"],
+        },
+      });
+      expect(wrapper.classes()).toContain(className);
+    }
+  );
+
+  it("should has the correct native type attribute when native-type prop is set", () => {
+    const wrapper = mount(Button, {
+      props: { nativeType: "submit" },
+    });
+    expect(wrapper.element.tagName).toBe("BUTTON");
+    expect((wrapper.element as any).type).toBe("submit");
+  });
+
+  // Test the click event with and without throttle
+  it.each([
+    ["withoutThrottle", false],
+    ["withThrottle", true],
+  ])("emits click event %s", async (_, useThrottle) => {
+    const clickSpy = vi.fn();
+    const wrapper = mount(() => (
+      <Button
+        onClick={clickSpy}
+        {...{
+          useThrottle,
+          throttleDuration: 400,
+        }}
+      />
+    ));
+
+    await wrapper.get("button").trigger("click");
+    expect(clickSpy).toHaveBeenCalled();
+  });
+
+  // Props: tag
+  it("should renders the custom tag when tag prop is set", () => {
+    const wrapper = mount(Button, {
+      props: { tag: "a" },
+    });
+    expect(wrapper.element.tagName.toLowerCase()).toBe("a");
+  });
+
+  // Events: click
+  it("should emits a click event when the button is clicked", async () => {
+    const wrapper = mount(Button, {});
+    await wrapper.trigger("click");
+    expect(wrapper.emitted().click).toHaveLength(1);
+  });
+
+  // Exception Handling: loading state
+  // it("should display loading icon and not emit click event when button is loading", async () => {
+  //   const wrapper = mount(Button, {
+  //     props: { loading: true },
+  //     global: {
+  //       stubs: ["ErIcon"],
+  //     },
+  //   });
+  //   const iconElement = wrapper.findComponent(Icon);
+  //
+  //   expect(wrapper.find(".loading-icon").exists()).toBe(true);
+  //   expect(iconElement.exists()).toBeTruthy();
+  //   expect(iconElement.attributes("icon")).toBe("spinner");
+  //   await wrapper.trigger("click");
+  //   expect(wrapper.emitted("click")).toBeUndefined();
+  // });
 });
+

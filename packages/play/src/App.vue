@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <GsButton></GsButton>
+  <gs-button type="primary">test</gs-button>
 </template>
 
 <style scoped>

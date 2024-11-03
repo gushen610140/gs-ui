@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest --coverage"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^2.1.4",
