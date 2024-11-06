@@ -8,7 +8,6 @@ export interface ButtonProps {
   tag?: string | Component;
   type?: ButtonType;
   size?: ButtonSize;
-  plain?: boolean;
   round?: boolean;
   circle?: boolean;
   disabled?: boolean;

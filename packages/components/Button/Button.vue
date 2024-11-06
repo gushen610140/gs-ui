@@ -26,7 +26,6 @@ const slots = defineSlots();
     :class="{
       [`gs-button--${type}`]: type,
       [`gs-button--${size}`]: size,
-      'is-plain': plain,
       'is-round': round,
       'is-circle': circle,
       'is-disabled': disabled,
@@ -38,7 +37,3 @@ const slots = defineSlots();
     <slot></slot>
   </component>
 </template>
-
-<style scoped>
-@import "./style.css";
-</style>

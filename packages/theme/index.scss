@@ -1,0 +1,102 @@
+@use "./reset.scss";
+
+$themes: (
+  light: (
+    // color
+    color-primary: #409eff,
+    color-success: #67c23a,
+    color-warning: #e6a23c,
+    color-danger: #f56c6c,
+    color-info: #909399,
+    text-color-primary: #303133,
+    text-color-regular: #606266,
+    text-color-secondary: #909399,
+    text-color-placeholder: #a8abb2,
+    text-color-disabled: #a8abb2,
+    text-color-highlight: #fafafa,
+    bg-color: #ffffff,
+    bg-color-page: #f2f3f5,
+    bg-color-disabled: #f5f7fa,
+    bg-color-overlay: #ffffff,
+    bg-color-primary: rgba(64, 158, 255, 0.7),
+    bg-color-success: rgba(103, 194, 58, 0.7),
+    bg-color-warning: rgba(230, 162, 60, 0.7),
+    bg-color-danger: rgba(245, 108, 108, 0.7),
+    bg-color-info: rgba(144, 147, 153, 0.7),
+    bg-color-hover-primary: rgba(64, 158, 255, 0.9),
+    bg-color-hover-success: rgba(103, 194, 58, 0.9),
+    bg-color-hover-warning: rgba(230, 162, 60, 0.9),
+    bg-color-hover-danger: rgba(245, 108, 108, 0.9),
+    bg-color-hover-info: rgba(144, 147, 153, 0.9),
+    border-color: #dcdfe6,
+    border-color-light: #e4e7ed,
+    border-color-lighter: #ebeef5,
+    border-color-extra-light: #f2f6fc,
+    border-color-dark: #d4d7de,
+    border-color-darker: #cdd0d6,
+    boder-color-disabled: #e4e7ed,
+    fill-color: #f0f2f5,
+    fill-color-light: rgba(245, 247, 250, 0.7),
+    fill-color-lighter: #fafafa,
+    fill-color-extra-light: #fafcff,
+    fill-color-dark: rgba(235, 237, 240, 0.7),
+    fill-color-darker: #e6e8eb,
+    fill-color-blank: rgba(230, 235, 240, 0.7),
+
+    // border
+    border-width: 1px,
+    border-style: solid,
+    border-color-hover: #c0c4cc,
+    border: 1px solid #c0c4cc,
+    border-radius-small: 2px,
+    border-radius-base: 4px,
+    border-radius-round: 20px,
+    border-radius-circle: 100%,
+
+    // font
+    font-size-extra-large: 20px,
+    font-size-large: 18px,
+    font-size-medium: 16px,
+    font-size-base: 14px,
+    font-size-small: 13px,
+    font-size-extra-small: 12px,
+    font-family: "'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '\5fae\8f6f\96c5\9ed1', Arial, sans-sgsif",
+    font-weight-primary: 500,
+
+    // animation
+    transition-duration: 0.4s,
+    transition-duration-fast: 0.2s,
+
+    // background
+    backdrop-filter: blur(18px),
+
+    // shadow
+    box-shadow-primary: 0 0 30px rgba(0, 0, 0, 0.05),
+  ),
+
+  dark: (
+  )
+);
+
+$curTheme: light;
+@mixin useTheme() {
+  @each $theme, $var in $themes {
+    $curTheme: $theme !global;
+    html[data-theme="#{$theme}"] & {
+      @content;
+    }
+  }
+}
+
+@function getVar($key) {
+  $themeMap: map-get($themes, $curTheme);
+  @return map-get($themeMap, $key);
+}
+
+$types: (
+  primary,
+  success,
+  warning,
+  danger,
+  info
+)

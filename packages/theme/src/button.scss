@@ -1,0 +1,117 @@
+@use "../index" as *;
+
+.gs-button {
+
+  @include useTheme {
+    color: getVar('text-color-primary');
+    font-weight: getVar('font-weight-primary');
+    font-size: getVar('font-size-base');
+    border-radius: getVar('border-radius-base');
+    backdrop-filter: getVar('backdrop-filter');
+    box-shadow: getVar('box-shadow-primary');
+    background-color: getVar('fill-color-blank');
+    @each $val in $types {
+      &.gs-button--#{$val} {
+        background-color: getVar('bg-color-#{$val}');
+        color: getVar('text-color-highlight');
+      }
+    }
+  }
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: 32px;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  padding: 8px 15px;
+  border: none;
+
+  & + & {
+    margin-left: 12px;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    @include useTheme {
+      background-color: getVar("fill-color-light");
+      @each $val in $types {
+        &.gs-button--#{$val} {
+          background-color: getVar('bg-color-hover-#{$val}');
+        }
+      }
+    }
+  }
+
+  &.is-round {
+    @include useTheme {
+      border-radius: getVar('border-radius-round');
+    }
+  }
+
+  &.is-circle {
+    @include useTheme {
+      border-radius: getVar('border-radius-circle');
+    }
+  }
+
+  &[disabled],
+  &[disabled]:hover,
+  &[disabled]:focus,
+  &[disabled]:active {
+    @include useTheme {
+      color: getVar('text-color-disabled');
+      background-color: getVar('fill-color-dark');
+    }
+    cursor: not-allowed;
+  }
+}
+
+@each $val in $types {
+  .gs-button--#{$val} {
+
+  }
+}
+
+//@each $val in $--gs-main-colors {
+//  .gs-button--#{$val} {
+//    --gs-button-text-color: var(--gs-color-white);
+//    --gs-button-bg-color: var(--gs-color-#{$val});
+//    --gs-button-border-color: var(--gs-color-#{$val});
+//    --gs-button-outline-color: var(--gs-color-#{$val}-light-5);
+//    --gs-button-active-color: var(--gs-color-#{$val}-dark-2);
+//    --gs-button-hovgs-text-color: var(--gs-color-white);
+//    --gs-button-hovgs-bg-color: var(--gs-color-#{$val}-light-3);
+//    --gs-button-hovgs-bordgs-color: var(--gs-color-#{$val}-light-3);
+//    --gs-button-active-bg-color: var(--gs-color-#{$val}-dark-2);
+//    --gs-button-active-bordgs-color: var(--gs-color-#{$val}-dark-2);
+//    --gs-button-disabled-text-color: var(--gs-color-white);
+//    --gs-button-disabled-bg-color: var(--gs-color-#{$val}-light-5);
+//    --gs-button-disabled-bordgs-color: var(--gs-color-#{$val}-light-5);
+//  }
+
+.gs-button--large {
+  @include useTheme {
+    font-size: getVar('font-size-large');
+  }
+  height: 40px;
+  padding: 12px 19px;
+}
+
+.gs-button--small {
+  @include useTheme {
+    font-size: getVar('font-size-small');
+  }
+  height: 24px;
+  padding: 5px 11px;
+}
+
