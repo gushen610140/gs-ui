@@ -1,6 +1,7 @@
-import {GsButton} from "@gs-ui/components";
+import {GsButton, GsIcon} from "@gs-ui/components";
 import type {Plugin} from "vue";
 
 export default [
-    GsButton
+    GsButton,
+    GsIcon,
 ] as Plugin[]

@@ -7,8 +7,11 @@ type Story = StoryObj<typeof GsButton> & { argTypes?: ArgTypes };
 const meta: Meta<typeof GsButton> = {
   title: "Example/Button",
   component: GsButton,
-  tags: ["autodocs"],
   argTypes: {
+    tag: {
+      control: { type: "select" },
+      options: ["button", "a", "div"],
+    },
     type: {
       control: { type: "select" },
       options: ["primary", "success", "warning", "danger", "info", ""],
@@ -17,24 +20,17 @@ const meta: Meta<typeof GsButton> = {
       control: { type: "select" },
       options: ["large", "default", "small", ""],
     },
+    round: {
+      control: "boolean",
+    },
+    circle: {
+      control: "boolean",
+    },
     disabled: {
       control: "boolean",
     },
-    loading: {
-      control: "boolean",
-    },
-    useThrottle: {
-      control: "boolean",
-    },
-    throttleDuration: {
-      control: "number",
-    },
     autofocus: {
       control: "boolean",
-    },
-    tag: {
-      control: { type: "select" },
-      options: ["button", "a", "div"],
     },
     nativeType: {
       control: { type: "select" },
@@ -43,11 +39,27 @@ const meta: Meta<typeof GsButton> = {
     icon: {
       control: { type: "text" },
     },
+    loading: {
+      control: "boolean",
+    },
     loadingIcon: {
       control: { type: "text" },
     },
+    useThrottle: {
+      control: "boolean",
+    },
+    throttleDuration: {
+      control: "number",
+    },
+    slot: {
+      control: { type: "text" },
+    },
   },
-  args: { onClick: fn() },
+  args: {
+    onClick: fn(),
+    slot: "Button",
+    type: "primary",
+  },
 };
 
 const container = (val: string) => `
@@ -56,33 +68,26 @@ const container = (val: string) => `
 </div>
 `;
 
-export const Default: Story & { args: { content: string } } = {
-  argTypes: {
-    content: {
-      control: { type: "text" },
-    },
-  },
-  args: {
-    type: "primary",
-    content: "Button",
-  },
+export const Default: Story = {
   render: (args) => ({
     components: { GsButton },
     setup() {
       return { args };
     },
     template: container(
-      `<gs-button v-bind="args">{{args.content}}</gs-button>`
+      `<gs-button v-bind="args">{{args.slot}}</gs-button>`
     ),
   }),
-  // play: async ({ canvasElement, args, step }) => {
-  //   const canvas = within(canvasElement);
-  //   await step("click button", async () => {
-  //     await userEvent.tripleClick(canvas.getByRole("button"));
-  //   });
-  //
-  //   expect(args.onClick).toHaveBeenCalled();
-  // },
+
+  play: async ({ canvasElement, args, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("click button", async () => {
+      await userEvent.click(canvas.getByRole("button"));
+    });
+
+    await expect(args.onClick).toHaveBeenCalled();
+  },
 };
 
 export default meta;
